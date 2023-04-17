@@ -1,0 +1,97 @@
+﻿@model FacturacionElectronicaCreacionViewModel
+
+@{
+    ViewData["Title"] = "Solicitud Facturación Electronica";
+}
+
+<h1>Solicitud Facturación Electronica</h1>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<div asp-validation-summary="ModelOnly"></div>
+<form asp-action="Crear">
+    <div class="mb-3">
+        <label asp-for="IdEstacionamiento" class="form-label"></label>
+        <select asp-for="IdEstacionamiento" asp-items="Model.Estacionamientos" class="form-select"></select>
+        <span asp-validation-for="IdEstacionamiento" class="text-danger"></span>
+    </div>
+@*    <div class="mb-3">
+        <label asp-for="TipoPersona" class="form-label">Tipo de persona</label>
+        <select class="form-select" aria-label="Default select example" name="TipoPersona">
+            <option selected name="TipoDocumento">Seleccione...</option>
+            <option value="Natural" id="Natural">Natural</option>
+            <option value="Juridica" id="Juridica">Jurídica</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TipoDocumento" class="form-label">Tipo de documento</label>
+        <select class="form-select" aria-label="Default select example" name="TipoDocumento">
+            <option selected name="TipoDocumento">Seleccione...</option>
+            <option value="CC">Cedula de ciudadanía</option>
+            <option value="CE">Cedula de extranjería</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NumeroDocumento" class="form-label">Número de documento</label>
+        <input type="text" id="NumeroDocumento" name="NumeroDocumento" autocomplete="off" class="form-control" />
+        <span asp-validation-for="NumeroDocumento" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NombresApellidos" class="form-label">Nombres</label>
+        <input type="text" id="NombreApellidos" name="NombresApellidos" autocomplete="off" class="form-control" />
+        <span asp-validation-for="NombresApellidos" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CorreoElectronico" class="form-label">Email</label>
+        <input type="text" id="CorreoElectronico" name="CorreoElectronico" autocomplete="off" class="form-control" />
+        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Direccion" class="form-label">Direccion</label>
+        <input type="text" id="Direccion" name="Direccion" autocomplete="off" class="form-control" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Seleccione la imagen de la factura</label>
+        <input class="form-control" type="file" id="formFile" name="Imagen">
+    </div>*@
+    <br />
+    <button type="submit" class="btn btn-success">Enviar</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+<script>
+        const urlPrefijos = '@Url.Action("ListarPrefijos")';
+
+    $(function(){
+            $("#IdEstacionamiento").change(async function(){
+                const valorSeleccionado= $(this).val();
+
+                const respuesta = await fetch(urlPrefijos, {
+                    method: 'POST',
+                    body: valorSeleccionado,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const json = await respuesta.json();
+                console.log(json);
+                //const opciones = json.map()
+
+            })
+    })
+  
+
+</script>
+
+
+}
